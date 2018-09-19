@@ -1,4 +1,5 @@
 # React.js v16 Keynotes
+
 ## 1. Error Boundaries
 Use `componentDidCatch()` to catch the errors of the component. For example:
 ```javascript
@@ -160,4 +161,48 @@ componentDidUpdate(prevProps, prevState, snapshot) {
 - It receives prevProps and prevState
 - `getSnapshotBeforeUpdate()` is invoked right before the most recently rendered output is committed to the DOM
 
+## 11. Context providers and consumers
+With React 16.3 a new Context API was introduced. It provides a way to share values like that are considered global between components without having to explicitly pass a prop through every level of the tree.
+
+Firstly, create a context object with a default value:
+```javascript
+const ThemeContext = React.createContext({
+  theme: themes.dark
+});
+```
+
+And then wrap the component in the `ThemeContext.Provider` and provide the value:
+```javascript
+const themes = {
+  dark: {
+    color: '#000'
+  },
+  light: {
+    color: '#fff'
+  }
+};
+<ThemeContext.Provider value={themes.dark}>
+  <MyComponent />
+<ThemeContext.Provider>
+```
+
+Now we can use the theme value from `<MyComponent>` with `ThemeContext.Consumer`:
+```javascript
+<ThemeContext.Consumer>
+  {
+    theme => {
+      const style = { color: theme.color };
+      return (
+        <div style={style}>This is my component</div>
+      );
+    }
+  }
+</ThemeContext.Consumer>
+```
+
+- It can be used as a global object and share between components.
+- Consumers and providers from different context instances are independent of each other. In order to use multiple providers and consumers, you need to nest them.
+- 
+
+###### Official Doc: [https://reactjs.org/docs/getting-started.html](https://reactjs.org/docs/getting-started.html)
 ###### Video source: [https://egghead.io/courses/leverage-new-features-of-react-16](https://egghead.io/courses/leverage-new-features-of-react-16)

@@ -1,4 +1,4 @@
-# React.js v16 Keynotes
+# React.js learning notes
 
 ## 1. Error Boundaries
 Use `componentDidCatch()` to catch the errors of the component. For example:
